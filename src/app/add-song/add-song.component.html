@@ -1,0 +1,39 @@
+<div class="container">
+    <div>
+    <h2>Add a Song :</h2>
+    </div>
+    <form >
+    <div hidden class="col-sm-2 col-md-2 col-lg-2">
+    <label >ID Song</label>
+    <input type="text" [(ngModel)]="newSong.idSong"
+    name="idSong" class="form-control">
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-4" >
+    <label >Song Name</label>
+    <input type="text"[(ngModel)]= "newSong.nomSong"
+    name="nomSong" class="form-control">
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+    <label >Artist</label>
+    <input type="text" [(ngModel)]= "newSong.nomArtist"
+    name="nomArtist" class="form-control">
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-4">
+    <label >Release Date</label>
+    <input type="date" [(ngModel)]= "newSong.releaseDate"
+    name="releaseDate" class="form-control">
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-4">
+        <label>Genre</label>
+        <select class="form-control form-control-lg" id="idGenre" name="idGenre"
+        [(ngModel)]="newIdGenre">
+         <option *ngFor="let genre of genres" [value]="genre.idGenre" >
+         {{genre.nomGenre}}
+        </option>
+        </select>
+    </div> 
+    <div class="mt-2">
+    <button type="submit" (click)="addSong()"class="btn btn-success">Add</button>
+    </div>
+    </form>
+</div>

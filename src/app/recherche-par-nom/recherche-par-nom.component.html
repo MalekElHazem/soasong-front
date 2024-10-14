@@ -1,0 +1,49 @@
+<div class="container">
+
+
+    <form class="form-inline">
+        <div class="form-group mx-sm-3 mb-2 mt-2 ">
+        <label>Song Name while typing</label>
+        <input #nom [(ngModel)]="searchTerm" name="searchTerm" class="form-control" >
+        </div>
+    </form>
+
+
+
+    <!-- <form class="form-inline">
+        <div class="form-group mx-sm-3 mb-2 mt-2 ">
+            <label>Nom Song en tapant</label>
+            <input class="form-control" #searchTerm (keyup)="onKeyUp(searchTerm.value)">
+        </div>
+    </form> -->
+
+
+
+    <!-- <form class="form-inline">
+        <div class="form-group mx-sm-3 mb-2 mt-2 ">
+        <label>Nom Song</label>
+        <input type="text" class="form-control" [(ngModel)]="nomSong" name="nomSong" class="form-control">
+        <button type="submit" (click)="rechercherSongs()" class="btn btn-primary mb-2 ml-2">Rechercher</button>
+        </div>
+    </form> -->
+
+        
+    <div class="card shadow mb-4">
+    <div class="card-body">
+    <table class="table table-striped">
+    <tr> <th>Id</th><th>Name</th> <th>Artist</th> <th>Release Date</th> <th>Genre</th>  </tr>
+    <tbody *ngFor="let song of songs | searchFilter: searchTerm ">
+    <tr >
+    <td>{{song.idSong}}</td>    
+    <td>{{song.nomSong}}</td>
+    <td>{{song.nomArtist}}</td>
+    <td>{{song.releaseDate | date:'dd/MM/yyyy'}}</td>
+    <td>{{song.genre.nomGenre}}</td>
+    <!-- <td><a class="btn btn-success" [routerLink]="['/updateSong',song.idSong]">Edit</a></td>
+    <td><a class="btn btn-danger" (click)="supprimerSong(song)">Delete</a></td> -->
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    </div>
+</div>  

@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="card shadow mb-4">
+    <div class="card-body">
+    <table class="table table-striped">
+    <tr> <th>Id</th><th>Name</th> <th>Artist</th> <th>Release Date</th> <th>Genre</th>  </tr>
+    <tbody *ngFor="let song of songs">
+    <tr >
+    <td>{{song.idSong}}</td>
+    <td>{{song.nomSong}}</td>
+    <td>{{song.nomArtist}}</td>
+    <td>{{song.releaseDate | date:'dd/MM/yyyy'}}</td>
+    <td>{{song.genre.nomGenre}}</td>
+    <td><a *ngIf="authService.isAdmin()" class="btn btn-success" [routerLink]="['/updateSong',song.idSong]">Edit</a></td>
+    <td><a *ngIf="authService.isAdmin()" class="btn btn-danger" (click)="supprimerSong(song)">Delete</a></td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    </div>
+</div>  
