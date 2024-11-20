@@ -4,6 +4,7 @@ import { Genre } from './model/genre.model';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { apiURL, apiURLGen } from './config';
+import { Image } from './model/image.model'; // Add this line
 import { GenreWrapper } from './model/genreWrapped';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from './auth.service';
@@ -132,5 +133,29 @@ export class SongService {
     
     ajouterGenre( cat: Genre):Observable<Genre>{
       return this.http.post<Genre>(apiURLGen, cat, httpOptions);
+    }
+
+    uploadImage(file: File, filename: string): Observable<Image>{
+      const imageFormData = new FormData();
+      imageFormData.append('image', file, filename);
+      const url = `${apiURL + '/image/upload'}`;
+      return this.http.post<Image>(url, imageFormData);
+    }
+
+    loadImage(id: number): Observable<Image> {
+      const url = `${apiURL + '/image/get/info'}/${id}`;
+      return this.http.get<Image>(url);
+    }
+
+    uploadImageSong(file: File, filename: string, idSong:number): Observable<any>{
+      const imageFormData = new FormData();
+      imageFormData.append('image', file, filename);
+      const url = `${apiURL + '/image/uploadImageSong'}/${idSong}`;
+      return this.http.post(url, imageFormData);
+    }
+
+    supprimerImage(id : number) {
+      const url = `${apiURL}/image/delete/${id}`;
+      return this.http.delete(url, httpOptions);
     }
 }

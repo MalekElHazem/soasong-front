@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Song } from '../model/song.model';
 import { SongService } from '../song.service';
 import { AuthService } from '../auth.service';
+import { Image } from '../model/image.model';
 
 @Component({
   selector: 'app-songs',
@@ -18,13 +19,30 @@ export class SongsComponent implements OnInit {
       
     }
 
-  
+  /*
     chargerSongs(){
       this.songService.listeSong().subscribe(songs => {
-      console.log(songs);
       this.songs = songs;
+      this.songs.forEach((song) => {
+      this.songService
+      .loadImage(song.image.idImage)
+      .subscribe((img: Image) => {
+        song.imageStr = 'data:' + img.type + ';base64,' + img.image;
       });
-    }
+      });
+      });
+    }*/
+
+      chargerSongs(){
+        this.songService.listeSong().subscribe(songs => {
+        this.songs = songs;
+        this.songs.forEach((song) => {
+          song.imageStr = 'data:' + song.images[0].type + ';base64,' +
+          song.images[0].image;
+        });
+        });
+        }
+
 
     supprimerSong(s: Song)
     {
@@ -36,6 +54,5 @@ export class SongsComponent implements OnInit {
       });
     } 
  
-
-
+   
 }

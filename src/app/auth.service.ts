@@ -3,6 +3,8 @@ import { User } from './model/User';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs';
+import { Image } from './model/image.model'; // Add this line to import Image type
 
 @Injectable({
   providedIn: 'root',
@@ -77,7 +79,7 @@ export class AuthService {
       this.isloggedIn = false;
       localStorage.removeItem('jwt');
       this.router.navigate(['/login']);
-      }
+    }
 
 
   // SignIn(user: User): Boolean {
@@ -123,4 +125,6 @@ export class AuthService {
       {observe:'response'});
     }
     
+    
+      
 }

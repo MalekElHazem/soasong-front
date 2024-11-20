@@ -2,17 +2,22 @@
     <div class="card shadow mb-4">
     <div class="card-body">
     <table class="table table-striped">
-    <tr> <th>Id</th><th>Name</th> <th>Artist</th> <th>Release Date</th> <th>Genre</th>  </tr>
+        <tr> <th>Id</th><th>Song</th> <th>Artist</th> <th>releaseDate</th><th>Genre</th> <th>Image</th></tr>    
     <tbody *ngFor="let song of songs">
-    <tr >
+    <tr>
     <td>{{song.idSong}}</td>
     <td>{{song.nomSong}}</td>
     <td>{{song.nomArtist}}</td>
     <td>{{song.releaseDate | date:'dd/MM/yyyy'}}</td>
     <td>{{song.genre.nomGenre}}</td>
+    <td><img class="card-img-top img-responsive"
+        src = "{{song.imageStr}}"
+        style = "height :50px;width:100px">
+        </td>   
     <td><a *ngIf="authService.isAdmin()" class="btn btn-success" [routerLink]="['/updateSong',song.idSong]">Edit</a></td>
     <td><a *ngIf="authService.isAdmin()" class="btn btn-danger" (click)="supprimerSong(song)">Delete</a></td>
-    </tr>
+     
+</tr>
     </tbody>
     </table>
     </div>
