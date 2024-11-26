@@ -26,18 +26,23 @@ export class AddSongComponent implements OnInit{
     });
   }
 
-  addSong(){
-    this.songService
-    .uploadImage(this.uploadedImage, this.uploadedImage.name)
-    .subscribe((img: Image) => {
-    this.newSong.image=img;
-    this.newSong.genre = this.genres.find(gen => gen.idGenre
-    == this.newIdGenre)!;
-    this.songService
-    .ajouterSong(this.newSong)
-    .subscribe(() => {
-    this.router.navigate(['songs']);
-    });
+  addSong() {
+    this.newSong.genre = this.genres.find(gen => gen.idGenre == this.newIdGenre)!;
+    this.songService.ajouterSong(this.newSong).subscribe(song => {
+      if (this.uploadedImage) {
+        this.songService.uploadImage(this.uploadedImage, this.uploadedImage.name, song.idSong)
+          .subscribe({
+            next: (img: Image) => {
+              this.newSong.image = img;
+              this.router.navigate(['/']);
+            },
+            error: (err) => {
+              console.error('Error uploading image:', err);
+            }
+          });
+      } else {
+        this.router.navigate(['songs']);
+      }
     });
   }
 

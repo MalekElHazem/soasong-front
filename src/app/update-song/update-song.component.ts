@@ -88,11 +88,11 @@ export class UpdateSongComponent implements OnInit {
 
   onImageUpload(event: any) {
     if(event.target.files && event.target.files.length) {
-    this.uploadedImage = event.target.files[0];
-    this.isImageUpdated =true;
-    const reader = new FileReader();
-    reader.readAsDataURL(this.uploadedImage);
-    reader.onload = () => { this.myImage = reader.result as string; };
+      this.uploadedImage = event.target.files[0];
+      this.isImageUpdated =true;
+      const reader = new FileReader();
+      reader.readAsDataURL(this.uploadedImage);
+      reader.onload = () => { this.myImage = reader.result as string; };
     }
   }
 
@@ -103,28 +103,49 @@ export class UpdateSongComponent implements OnInit {
     this.uploadedImage.name,this.currentSong.idSong)
     .subscribe( (img : Image) => {
     this.currentSong.images.push(img);
+    this.uploadedImage = null!;
+        this.myImage = '';
+        this.isImageUpdated = false;
+        // Reset the file input element
+        const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+        if (fileInput) {
+          fileInput.value = '';
+        }
     });
   }
 
-  supprimerImage(img: Image){
+  supprimerImage(img: Image) {
     let conf = confirm("Etes-vous sûr ?");
-    if (conf)
-    this.songService.supprimerImage(img.idImage).subscribe(() => {
-    //supprimer image du tableau currentProduit.images
-    const index = this.currentSong.images.indexOf(img, 0);
-    if (index > -1) {
-    this.currentSong.images.splice(index, 1);
+    if (conf) {
+      this.songService.supprimerImage(img.idImage).subscribe(() => {
+        const index = this.currentSong.images.indexOf(img, 0);
+        if (index > -1) {
+          this.currentSong.images.splice(index, 1);
+        }
+      });
     }
-    });
   }
 
   updateSong() {
-    this.currentSong.genre = this.genres.find(gen => gen.idGenre ==
-    this.updatedGenreId)!;
-    this.songService
-    .updateSong(this.currentSong)
-    .subscribe((song) => {
-    this.router.navigate(['songs']);
+    this.currentSong.genre = this.genres.find(gen => gen.idGenre == this.updatedGenreId)!;
+    this.songService.updateSong(this.currentSong).subscribe(() => {
+      if (this.uploadedImage) {
+        this.songService.uploadImage(this.uploadedImage, this.uploadedImage.name, this.currentSong.idSong)
+          .subscribe({
+            next: (img: Image) => {
+              if (!this.currentSong.images) {
+                this.currentSong.images = [];
+              }
+              this.currentSong.images.push(img);
+              this.router.navigate(['/']);
+            },
+            error: (err) => {
+              console.error('Error uploading image:', err);
+            }
+          });
+      } else {
+        this.router.navigate(['/']);
+      }
     });
   }
     

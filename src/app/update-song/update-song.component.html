@@ -45,7 +45,7 @@
     </div>
     <div class="col-sm-16 col-md-16 col-lg-16">
         <img [src]="myImage" class="card-img-top img-fluid rounded-start"
-        style="width: 500px; height: 300px" />
+        style="width: 300px; height: 300px" />
     </div>
 
     <div class="card shadow mb-4">
@@ -58,7 +58,7 @@
             <tr>
             <td><img class="card-img-top img-responsive"
             src = "{{'data:' + img.type + ';base64,' + img.image}}"
-            style = "height :50px;width:100px"></td>
+            style = "height :50px;width:50px"></td>
             <td style="width:20%" ><a class="btn btn-danger"
                 (click)="supprimerImage(img)">Delete</a></td>
             </tr>
@@ -71,7 +71,7 @@
    
 
     <div class="mt-2">
-    <button type="submit" (click)="updateSong()" class="btn btn-success">Edit</button>
+    <button type="submit" (click)="updateSong()" class="btn btn-primary">Edit</button>
     </div>
     </form>
 </div>

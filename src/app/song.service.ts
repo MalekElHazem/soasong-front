@@ -61,6 +61,8 @@ export class SongService {
     return this.http.delete(url, {headers:httpHeaders});
     }
 
+    
+
   consulterSong(id: number): Observable<Song> {
     const url = `${apiURL}/getbyid/${id}`;
     let jwt = this.authService.getToken();
@@ -135,11 +137,14 @@ export class SongService {
       return this.http.post<Genre>(apiURLGen, cat, httpOptions);
     }
 
-    uploadImage(file: File, filename: string): Observable<Image>{
-      const imageFormData = new FormData();
-      imageFormData.append('image', file, filename);
-      const url = `${apiURL + '/image/upload'}`;
-      return this.http.post<Image>(url, imageFormData);
+    uploadImage(file: File, filename: string, songId: number): Observable<Image> {
+      const formData = new FormData();
+      formData.append('image', file, filename);
+      
+      return this.http.post<Image>(
+        `${apiURL}/image/uploadImageSong/${songId}`,
+        formData
+      );
     }
 
     loadImage(id: number): Observable<Image> {
@@ -158,4 +163,6 @@ export class SongService {
       const url = `${apiURL}/image/delete/${id}`;
       return this.http.delete(url, httpOptions);
     }
+
+    
 }

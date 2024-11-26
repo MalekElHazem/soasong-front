@@ -33,26 +33,34 @@ export class SongsComponent implements OnInit {
       });
     }*/
 
-      chargerSongs(){
+      chargerSongs() {
         this.songService.listeSong().subscribe(songs => {
-        this.songs = songs;
-        this.songs.forEach((song) => {
-          song.imageStr = 'data:' + song.images[0].type + ';base64,' +
-          song.images[0].image;
+          this.songs = songs;
+          this.songs.forEach((song) => {
+            if (song.images && song.images.length > 0) {
+              song.imageStr = 'data:' + song.images[0].type + ';base64,' + song.images[0].image;
+            } else {
+              song.imageStr = ''; // or set a default image string
+            }
+          });
         });
-        });
+      }
+
+
+      supprimerSong(s: Song) {
+        let conf = confirm("Etes-vous sûr ?");
+        if (conf) {
+          this.songService.supprimerSong(s.idSong).subscribe({
+            next: () => {
+              console.log("song supprimé");
+              this.chargerSongs();
+            },
+            error: (err) => {
+              console.error('Error deleting song:', err);
+            }
+          });
         }
-
-
-    supprimerSong(s: Song)
-    {
-      let conf = confirm("Etes-vous sûr ?");
-      if (conf)
-      this.songService.supprimerSong(s.idSong).subscribe(() => {
-      console.log("song supprimé");
-      this.chargerSongs();
-      });
-    } 
+      }
  
    
 }

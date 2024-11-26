@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <title>Songs Mangment</title>
   </head>
-  <body>
-    <nav class="navbar navbar-expand-sm bg-purple navbar-dark">
+  <body class="body">
+    <nav class="navbar navbar-expand-sm  navbar-dark">
     <!-- Brand -->
     <a class="navbar-brand" href="#">Songs Mangment</a>
     <!-- Links -->
@@ -20,7 +20,7 @@
     </a>
     <div class="dropdown-menu">
     <a *ngIf="authService.isAdmin()" class="dropdown-item" routerLink = "add-song">Add</a>  
-    <a class="dropdown-item" href="#">List</a>
+    <a class="dropdown-item" href="/songs">List</a>
     <a class="dropdown-item" routerLink="/rechercheParGenre" >Research By Genre</a>
     <a class="dropdown-item" routerLink="/rechercheParNom" >Research By Name</a>
     <a class="dropdown-item" routerLink="/listeGenres" >Genre Mangment</a>
