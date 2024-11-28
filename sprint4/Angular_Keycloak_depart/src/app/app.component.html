@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta charset="utf-8">
+<title>Songs Mangment</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="/produits">Songs Mangment</a>
+
+  <!-- Links -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link"   routerLink="/produits" >Home</a>
+    </li>
+
+    <!-- Dropdown -->
+    <li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        Songs
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item"  href="#">Add</a>
+        <a class="dropdown-item"  routerLink="/produits"     *ngIf="keycloakService.getUserRoles().includes('ADMIN')"            >List</a>      
+      </div>
+    </li>
+    </ul>
+    
+    <ul class="navbar-nav ml-auto" > 
+     <li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+  <span *ngIf="profile; else NOT_LOGGED_IN">
+    {{profile.username}}
+  </span>
+  <ng-template #NOT_LOGGED_IN>
+    <button class="btn btn-success" (click)="onLogin()">Login</button>
+  </ng-template>
+
+      </a>
+      <div class="dropdown-menu">
+       <!--  <a class="dropdown-item"   (click)="login()"> login</a>      -->  
+        <a class="dropdown-item" (click)="onLogout()">logout</a>
+          <a class="dropdown-item" href="#">Profile</a>
+      </div>
+    </li>
+  </ul>
+</nav>
+</body>
+</html>
+<router-outlet></router-outlet>
